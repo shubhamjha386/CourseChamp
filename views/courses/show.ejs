@@ -1,0 +1,102 @@
+<%layout('layouts/boilerplate') -%> 
+<link rel="stylesheet" href="/styles/star.css">
+<div class="row">
+    <div class="col-6">
+      <% if(coursed.images.length>0){ %> 
+      <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active" data-bs-interval="5000">
+            <img src="<%=coursed.images[0].url%>" class="d-block w-100" alt="course-image">
+          </div>
+          <% for(let i=1;i<coursed.images.length;i++) {%>
+            <div class="carousel-item" data-bs-interval="5000">
+              <img src="<%=coursed.images[i].url%>" class="d-block w-100" alt="course-image">
+            </div>
+          <% } %>  
+        </div>
+        <% if(coursed.images.length>1) {%> 
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+        <% } %> 
+      </div>
+      <% } %> 
+        <div class="card">
+            <div class="card-body">
+              <h4 class="card-title"><%= coursed.title %></h5>
+              <p class="card-title"><b> Posted by: <%= coursed.creator.username %></b></p>
+              <p class="card-text"><%= coursed.description %></p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Pirce: ₹<%= coursed.price %></li>
+              <li class="list-group-item"><%= coursed.coupon%></li>
+            </ul>
+            <% if(currentuser && coursed.creator.equals(currentuser)){ %> 
+            <div class="card-body">
+              <a href="/courses/<%=coursed._id%>/edit" class="card-link btn btn-info">Edit</a>
+              <form class="d-inline ms-3" action="/courses/<%= coursed._id %>?_method=DELETE" method="POST">
+                <button class="btn btn-danger">Delete</button>
+            </form>
+            </div>
+          <% } %> 
+           
+          </div>
+    </div>
+    <div class="col-6">
+      <% if(currentuser) {%> 
+      <h2 class="mt-3">Leave a Review</h2>
+          <form action="/courses/<%=coursed._id%>/reviews" method="POST" class="mb-3 form-validation" novalidate>
+          <div class="mb-3">
+            <fieldset class="starability-basic">
+              <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked aria-label="No rating." />
+              <input type="radio" id="first-rate1" name="rating" value="1" />
+              <label for="first-rate1" title="Terrible">1 star</label>
+              <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+              <label for="first-rate2" title="Not good">2 stars</label>
+              <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+              <label for="first-rate3" title="Average">3 stars</label>
+              <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+              <label for="first-rate4" title="Very good">4 stars</label>
+              <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+              <label for="first-rate5" title="Amazing">5 stars</label>
+            </fieldset>
+          </div>
+            <div class="mb-3">
+                <label for="floatingInput">Review</label>
+                <textarea class="form-control" name="review[comment]" id="comment" cols="30" rows="3" placeholder="Add your comment" required></textarea>               
+            </div>
+
+            <button class="btn btn-success">Submit</button>
+          </form>
+  <% } %> 
+          <h2 class="mt-3">User Reviews</h2>
+          
+          <% if(coursed.reviews.length===0){ %>
+            <p>No reviews yet</p>
+          <% } else { %> 
+          <% for(let review of coursed.reviews){ %>
+            <div class="card mb-3">
+              <div class="card-body">
+                <h6 class="card-title text-muted">By: <%= review.creator.username %></h5>
+                <p class="starability-result" data-rating="<%= review.rating %>">
+                  Rated: <%= review.rating %> stars
+                </p>
+                <p class="card-text"><%= review.comment%></p>
+              <% if(currentuser && review.creator.equals(currentuser)){ %> 
+                <form action="/courses/<%=coursed._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
+                  <button class="btn btn-sm btn-danger">Delete</button>
+                </form>
+              <% } %> 
+              </div>
+            </div>
+          <% } }%>  
+    </div>
+          
+</div>
+
+

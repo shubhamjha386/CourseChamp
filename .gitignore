@@ -1,0 +1,4 @@
+node_modules/
+projects11.code-workspace
+.env
+.vscode
