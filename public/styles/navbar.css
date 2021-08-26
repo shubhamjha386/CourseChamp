@@ -1,0 +1,51 @@
+.bg-light {
+  background-color: rgb(255, 255, 255) !important;
+}
+.navbar{
+  border-style: solid;
+  border-width: 1px;
+  border-right: none;
+  border-color: rgb(204, 204, 204);
+}
+.navbar .container-fluid .navbar-brand {
+  color: rgb(14, 100, 255);
+}
+.navbar .navbar-brand{
+  font-size: 1.30rem;
+  font-weight: bold;
+  font-family: "Merriweather";
+  line-height: 1.2;
+}
+nav form
+{
+  width:600px;
+  max-width: 70%;
+}
+nav form .search-control
+{
+  border:none;
+  outline: none;
+  width:100%;
+  padding:0.5rem;
+  background-color: rgb(247, 249, 250);
+  color: rgb(106, 106, 106);
+  line-height: 1.2;
+}
+.navbar .navbar-nav .nav-link{
+  color:  rgb(65, 62, 62);
+  font-size: 0.85rem;
+  font-family: "Merriweather";
+}
+nav form .wrapper{
+   border: 1px solid rgb(162, 162, 162);
+   background-color: rgb(247, 249, 250);
+   border-radius: 1.5rem;
+}
+nav .nav-options{
+  width: 50%;
+}
+.nav-options .navbar-nav .nav-link{
+  box-sizing: border-box;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}

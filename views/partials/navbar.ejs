@@ -1,24 +1,43 @@
-<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid ">
-      <a class="navbar-brand" href="/">Project-S11</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <div class="navbar-nav">
-            <a class="nav-link active" aria-current="page" href="/">Home</a>
-            <a class="nav-link" href="/courses">Courses</a>
-            <a class="nav-link" href="/courses/submit">Submit Course</a>
-            <a class="nav-link" href="#">About</a>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,
+wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="/styles/navbar.css">
+
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid d-flex justify-content-between">
+      <a class="navbar-brand" href="/">LOGO</a>
+      <form>
+        <div class="wrapper container-fluid d-flex align-items-center justify-content-between">
+          <div class="fa fa-search"></div>
+          <input type="search" class="search-control ms-2 me-2"  placeholder="Search for anything">
         </div>
-      <div class="navbar-nav ms-auto">
-        <% if(!currentuser){%>
-          <a class="nav-link" href="/register">Register</a>
-          <a class="nav-link" href="/login">Login</a>
-        <% } else { %> 
-          <a class="nav-link" href="/logout">Logout</a>
-          <% } %> 
+      </form>
+  
+  <div class="nav-options">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <div class="navbar-nav">
+              <a class="nav-link" aria-current="page" href="/courses">Explore</a>
+              <a class="nav-link" href="/courses/submit">Submit Course</a>
+              <a class="nav-link" href="#">About</a>
+          </div>
+        <div class="navbar-nav ms-auto">
+          <% if(!currentuser){%>
+            <a class="nav-link" href="/register">Register</a>
+            <a class="nav-link" href="/login">Login</a>
+          <% } else { %> 
+            <a class="nav-link" href="/logout">Logout</a>
+            <% } %> 
+        </div> 
       </div>
-      </div> 
     </div>
+   </div>
+
   </nav>
+
+
+
