@@ -16,7 +16,7 @@ if(process.env.NODE_ENV !== "production"){
 
 const mongoose = require("mongoose");
 mongoose
-  .connect("mongodb://localhost:27017/courses", {
+  .connect("mongodb+srv://admin-ansh:anshsarin00@cluster0.2l6ki.mongodb.net/project-s11", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
