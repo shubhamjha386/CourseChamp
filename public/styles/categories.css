@@ -8,7 +8,7 @@
 }
 .categories .items{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-evenly;
     flex-wrap: wrap;
 }
@@ -21,10 +21,35 @@
   text-align: center;
   color: rgb(64, 64, 64);
 }
-
-@media (min-width:768px)
+@media (max-width:991px)
 {
     .categories .items{
-        flex-direction: row;
+        /* flex-direction: column; */
+        display: none;
+    }
+    .mobile-items{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+    }
+    .mobile-items a{
+        display: block;
+        padding: 0.5rem;
+        font-family: "Merriweather";
+        color: #0d6efd;
+        text-decoration: none;
+        text-align: center;
+        color: rgb(64, 64, 64);
+    }
+    button.categories-button{
+        border: 0px;
+        font-family: "Merriweather";
+        background: none;
+        padding: 0.5rem;
+        outline: none;
+    }
+    .navbar-toggler:focus{
+        box-shadow: none;
     }
 }
