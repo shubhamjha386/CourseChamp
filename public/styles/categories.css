@@ -6,16 +6,18 @@
     padding:0;
     height: max-content;
 }
-.categories .items{
+.items{
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     flex-wrap: wrap;
+    
 }
 .items a{
   display: block;
   padding: 0.5rem;
   font-family: "Merriweather";
+  font-size: 14px;
   color: #0d6efd;
   text-decoration: none;
   text-align: center;

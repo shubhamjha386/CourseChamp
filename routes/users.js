@@ -39,6 +39,8 @@ router.post('/login', passport.authenticate('local',{failureFlash: true, failure
 router.get('/logout', (req,res)=>{
     req.logout();
     req.flash('success'," Logged out");
-    res.redirect('/courses');
+    const redirectURl = req.session.returnto || '/courses';
+    delete req.session.returnto;
+    res.redirect(redirectURl);
 })
 module.exports = router;

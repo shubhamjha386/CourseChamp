@@ -9,13 +9,13 @@ const {reviewSchema} = require('../joivalidate');
 const {isloggedin,isCreator} = require('../middleware');
 
 const validateReview = (req,res,next)=>{
-    // const {error} = reviewSchema.validate(req.body);
-    // if(error)
-    //   {
-    //     const msg = error.details.map(el=>el.message).join(',');
-    //     throw new AppError(msg,400);
-    //   }
-    // else
+    const {error} = reviewSchema.validate(req.body);
+    if(error)
+      {
+        const msg = error.details.map(el=>el.message).join(',');
+        throw new AppError(msg,400);
+      }
+    else
       next();
   }
 router.post("/", isloggedin, validateReview, wrapAsync(async (req,res)=>{
