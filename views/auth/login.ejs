@@ -1,5 +1,5 @@
-<%layout('layouts/boilerplate') -%> 
-<div class="row">
+<%layout('layouts/boilerplate') -%>
+<!-- <div class="row">
     <h1 class="text-center">Login</h1>
     <div class="col-6 offset-3">
         <form action="/login" method="POST" class="d-inline form-validation" novalidate>
@@ -18,4 +18,60 @@
             </div>
     </form>
     </div>
+</div> -->
+
+<link rel="stylesheet" href="/styles/signup.css" />
+
+<div class="signup-form">
+  <form action="/login" method="POST">
+    <h2>Login</h2>
+    <hr />
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            <span class="fa fa-user"></span>
+          </span>
+        </div>
+        <input
+          type="text"
+          class="form-control"
+          name="username"
+          placeholder="Username"
+          required="required"
+        />
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            <i class="fa fa-lock"></i>
+          </span>
+        </div>
+        <input
+          type="password"
+          class="form-control"
+          name="password"
+          placeholder="Password"
+          required="required"
+        />
+      </div>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary btn-lg">Sign in</button>
+    </div>
+
+    <div class="text-center">
+      Don't have an account? <a href="/register">Register here</a>
+    </div>
+    <hr class="my-4" />
+    <a
+      style="background-color: #dd4b39; color: rgb(255, 255, 255);"
+      class="btn btn-lg btn-block btn-primary"
+      href="/auth/google"
+    >
+      <i class="fab fa-google me-2"></i> Sign in with google</a
+    >
+  </form>
 </div>
