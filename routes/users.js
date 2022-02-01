@@ -23,7 +23,6 @@ router.post(
       const { fullname, username, email, password } = req.body;
       const user = new User({ email, username, fullname, photo, source });
       const newuser = await User.register(user, password);
-      console.log(newuser);
       req.login(newuser, (err) => {
         if (err) return next(err);
         req.flash("success", "Successfully registered");
@@ -84,7 +83,6 @@ passport.use(
           source,
         });
         user.save();
-        console.log(user);
         return done(null, user);
       }
 
@@ -108,6 +106,7 @@ router.get(
   "/auth/google/coursechamp",
   passport.authenticate("google", {
     failureRedirect: "/login",
+    failureFlash: true,
   }),
   (req, res) => {
     req.flash("success", "Logged in");

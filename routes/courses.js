@@ -105,10 +105,9 @@ router.post(
     courseurl = courseurl.split("\r\n");
     courseurl = courseurl.filter((url) => url.length > 0);
     let response = [];
-    console.log(req.user);
     for (url of courseurl) {
       const keywords = url.split("/");
-      console.log(keywords);
+
       if (keywords.length < 5 || keywords[2] !== "www.udemy.com") {
         response.push([
           "Not Valid Please enter a valid Udemy Course Link",
@@ -117,7 +116,7 @@ router.post(
         continue;
       } else if (
         (keywords.length < 6 || keywords[5] === "") &&
-        (req.user._id !== "61f8c91bc4c3ec2f24215671")
+        (!req.user || req.user._id != "61f8d17f3b22cb1b1404b3cc")
       ) {
         response.push(["No coupon code", null]);
         continue;
@@ -139,7 +138,7 @@ router.post(
         }
         if (
           newCourse["price"] !== "Free" &&
-          req.user._id !== "61f8c91bc4c3ec2f24215671"
+          req.user._id != "61f8d17f3b22cb1b1404b3cc"
         ) {
           response.push(["This coupon is not 100% Free", null]);
           continue;
