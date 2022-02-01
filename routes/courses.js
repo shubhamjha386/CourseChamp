@@ -115,7 +115,7 @@ router.post(
         continue;
       } else if (
         (keywords.length < 6 || keywords[5] === "") &&
-        (!req.user || req.user._id !== "61f8c954c4c3ec2f24215672")
+        (!req.user || req.user._id != "61f8d17f3b22cb1b1404b3cc")
       ) {
         response.push(["No coupon code", null]);
         continue;
@@ -137,7 +137,7 @@ router.post(
         }
         if (
           newCourse["price"] !== "Free" &&
-          req.user._id !== "61f8c954c4c3ec2f24215672"
+          req.user._id != "61f8d17f3b22cb1b1404b3cc"
         ) {
           response.push(["This coupon is not 100% Free", null]);
           continue;
