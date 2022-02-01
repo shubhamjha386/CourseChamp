@@ -31,7 +31,7 @@ router.get(
       } else {
         category = `${categories[0]} & ${categories[1]}`;
       }
-      const courses = await Course.find({category:category});
+      const courses = await Course.find({ category: category });
       res.render("courses/index", { courses });
     } else {
       const courses = await Course.find({});
@@ -64,14 +64,14 @@ router.get(
       req.flash("error", "Cannot find the course");
       res.redirect("/courses");
     }
-    category = coursed.category
+    category = coursed.category;
     categories = category.split(" ");
     if (categories.length == 1) {
       category = `${categories[0]}`;
     } else {
       category = `${categories[0]}-${categories[2]}`;
     }
-    res.render("courses/show", { coursed,category });
+    res.render("courses/show", { coursed, category });
   })
 );
 
@@ -105,8 +105,10 @@ router.post(
     courseurl = courseurl.split("\r\n");
     courseurl = courseurl.filter((url) => url.length > 0);
     let response = [];
+    console.log(req.user);
     for (url of courseurl) {
       const keywords = url.split("/");
+      console.log(keywords);
       if (keywords.length < 5 || keywords[2] !== "www.udemy.com") {
         response.push([
           "Not Valid Please enter a valid Udemy Course Link",
@@ -115,7 +117,7 @@ router.post(
         continue;
       } else if (
         (keywords.length < 6 || keywords[5] === "") &&
-        (!req.user || req.user._id !== "61daf7a3105577321021ce2c")
+        (req.user._id !== "61f8c91bc4c3ec2f24215671")
       ) {
         response.push(["No coupon code", null]);
         continue;
@@ -137,7 +139,7 @@ router.post(
         }
         if (
           newCourse["price"] !== "Free" &&
-          req.user._id !== "61daf7a3105577321021ce2c"
+          req.user._id !== "61f8c91bc4c3ec2f24215671"
         ) {
           response.push(["This coupon is not 100% Free", null]);
           continue;

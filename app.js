@@ -9,8 +9,6 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const findOrCreate = require("mongoose-findorcreate");
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
@@ -62,29 +60,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 
-passport.serializeUser(function (user, done) {
-  done(null, user);
-});
+passport.serializeUser(User.serializeUser());
 
-passport.deserializeUser(function (user, done) {
-  done(null, user);
-});
-
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:4000/auth/google/coursechamp",
-      userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
-    },
-    function (accessToken, refreshToken, profile, cb) {
-      User.findOrCreate({ googleId: profile.id }, function (err, user) {
-        return cb(err, user);
-      });
-    }
-  )
-);
+passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
@@ -92,6 +70,10 @@ app.use((req, res, next) => {
   res.locals.currentuser = req.user;
 
   next();
+});
+
+app.get("/about", (req, res) => {
+  res.render("layouts/about");
 });
 
 app.use("/", userRoutes);
@@ -102,18 +84,6 @@ app.use("/courses/:id/reviews", reviewRoutes);
 app.get("/", (req, res) => {
   res.render("home");
 });
-
-app.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["profile"] })
-);
-app.get(
-  "/auth/google/coursechamp",
-  passport.authenticate("google", { failureRedirect: "/login" }),
-  function (req, res) {
-    res.redirect("/");
-  }
-);
 
 app.all("*", (req, res, next) => {
   throw new AppError("Page not Found", 404);
