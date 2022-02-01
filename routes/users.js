@@ -6,10 +6,8 @@ const wrapAsync = require("../utils/wrapAsync");
 const { isloggedin } = require("../middleware");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const { compareDocumentPosition } = require("domutils");
+require("dotenv").config();
 
-const GOOGLE_CLIENT_ID =
-  "3908841842-sck3jdpifmjtbcj4ucqvdvgsac2cgqvt.apps.googleusercontent.com";
-const GOOGLE_CLIENT_SECRET = "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";
 
 router.get("/register", (req, res) => {
   res.render("auth/register");
@@ -62,9 +60,9 @@ router.get("/logout", (req, res) => {
 passport.use(
   new GoogleStrategy(
     {
-      callbackURL: `http://localhost:4000/auth/google/coursechamp`,
-      clientID: GOOGLE_CLIENT_ID,
-      clientSecret: GOOGLE_CLIENT_SECRET,
+      callbackURL: process.env.callbackURL,
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     },
     async (accessToken, refreshToken, profile, done) => {
       const email = profile.emails[0].value;

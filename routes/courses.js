@@ -3,6 +3,7 @@ const router = express.Router();
 const ejsLint = require("ejs-lint");
 const scrap = require("./scrap");
 ejsLint("courses/show");
+require("dotenv").config();
 
 const Course = require("../models/courses");
 const AppError = require("../utils/AppError");
@@ -24,7 +25,6 @@ router.get(
   wrapAsync(async (req, res) => {
     let { category } = req.query;
     if (category) {
-      // res.send(category);
       categories = category.split("-");
       if (categories.length == 1) {
         category = `${categories[0]}`;
@@ -115,7 +115,7 @@ router.post(
         continue;
       } else if (
         (keywords.length < 6 || keywords[5] === "") &&
-        (!req.user || req.user._id != "61f8d17f3b22cb1b1404b3cc")
+        (!req.user || req.user._id != process.env.adminID)
       ) {
         response.push(["No coupon code", null]);
         continue;
@@ -137,7 +137,7 @@ router.post(
         }
         if (
           newCourse["price"] !== "Free" &&
-          req.user._id != "61f8d17f3b22cb1b1404b3cc"
+          req.user._id != process.env.adminID
         ) {
           response.push(["This coupon is not 100% Free", null]);
           continue;

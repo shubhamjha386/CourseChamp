@@ -9,6 +9,7 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
+require("dotenv").config();
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
@@ -17,7 +18,7 @@ if (process.env.NODE_ENV !== "production") {
 const mongoose = require("mongoose");
 mongoose
   .connect(
-    "mongodb+srv://shubhamjha386:Shubham9582@cluster0.ws7mg.mongodb.net/CourseChamp?retryWrites=true&w=majority",
+    process.env.DatabaseUrl,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -34,7 +35,7 @@ mongoose
   });
 
 const sessionConfig = {
-  secret: "MustBeaEnvironmentVariable",
+  secret: process.env.SessionSecret,
   resave: false,
   saveUninitialized: true,
   cookie: {
