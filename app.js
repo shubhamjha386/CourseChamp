@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const method = require("method-override");
+const paginate = require("express-paginate");
 const ejsMate = require("ejs-mate");
 const AppError = require("./utils/AppError");
 const session = require("express-session");
@@ -17,15 +18,12 @@ if (process.env.NODE_ENV !== "production") {
 
 const mongoose = require("mongoose");
 mongoose
-  .connect(
-    process.env.DatabaseUrl,
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-    }
-  )
+  .connect(process.env.DatabaseUrl, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  })
   .then(() => {
     console.log("Connected to database");
   })
@@ -71,7 +69,7 @@ app.use((req, res, next) => {
   res.locals.currentuser = req.user;
   next();
 });
-
+app.use(paginate.middleware(10, 50));
 app.get("/about", (req, res) => {
   res.render("layouts/about");
 });

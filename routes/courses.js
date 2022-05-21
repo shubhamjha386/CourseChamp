@@ -1,4 +1,5 @@
 const express = require("express");
+const paginate = require("express-paginate");
 const router = express.Router();
 const ejsLint = require("ejs-lint");
 const scrap = require("./scrap");
@@ -19,11 +20,10 @@ const validateCourse = (req, res, next) => {
     throw new AppError(msg, 400);
   } else next();
 };
-
 router.get(
   "/",
   wrapAsync(async (req, res) => {
-    let { category } = req.query;
+    let { category, page } = req.query;
     if (category) {
       categories = category.split("-");
       if (categories.length == 1) {
@@ -31,11 +31,25 @@ router.get(
       } else {
         category = `${categories[0]} & ${categories[1]}`;
       }
-      const courses = await Course.find({ category: category });
-      res.render("courses/index", { courses });
+      const courses = await Course.find({ category: category })
+        .sort({ $natural: 1 })
+        .limit(req.query.limit)
+        .skip(req.skip)
+        .lean()
+        .exec();
+      let count = await Course.countDocuments({ category: category });
+      count = Math.ceil(count / req.query.limit);
+      res.render("courses/index", { courses, count, category });
     } else {
-      const courses = await Course.find({});
-      res.render("courses/index", { courses });
+      const courses = await Course.find({})
+        .sort({ $natural: 1 })
+        .limit(req.query.limit)
+        .skip(req.skip)
+        .lean()
+        .exec();
+      let count = await Course.countDocuments({});
+      count = Math.ceil(count / req.query.limit);
+      res.render("courses/index", { courses, count, category });
     }
   })
 );
@@ -75,28 +89,6 @@ router.get(
   })
 );
 
-// router.get(
-//   "/:id/edit",
-//   isloggedin,
-//   isCreator,
-//   wrapAsync(async (req, res) => {
-//     const { id } = req.params;
-//     const cte = await Course.findById(id);
-//     console.log(cte);
-//     res.redirect("/");
-//     // res.render("courses/edit", { cte });
-//   })
-// );
-
-// router.post("/", isloggedin, upload.array('image'), validateCourse, wrapAsync(async (req, res) => {
-//   const course = new Course(req.body.course);
-//   course.images = req.files.map( f=> ({url:f.path, filename: f.filename}));
-//   course.creator = req.user._id;
-//   await course.save();
-//   req.flash('success','Successfully submitted a new course');
-//   res.redirect(`courses/${course._id}`);
-// }));
-
 router.post(
   "/",
   isloggedin,
@@ -105,63 +97,80 @@ router.post(
     courseurl = courseurl.split("\r\n");
     courseurl = courseurl.filter((url) => url.length > 0);
     let response = [];
-    for (url of courseurl) {
-      const keywords = url.split("/");
-      if (keywords.length < 5 || keywords[2] !== "www.udemy.com") {
-        response.push([
-          "Not Valid Please enter a valid Udemy Course Link",
-          null,
-        ]);
-        continue;
-      } else if (
-        (keywords.length < 6 || keywords[5] === "") &&
-        (!req.user || req.user._id != process.env.adminID)
-      ) {
-        response.push(["No coupon code", null]);
-        continue;
-      } else {
-        let isPresent = await Course.findById(keywords[4]);
-        if (isPresent) {
-          if (isPresent["coupon"] === url) {
-            response.push([
-              "This Coupon Code is Old",
-              `/courses/${keywords[4]}`,
-            ]);
-            continue;
-          }
-        }
-        const newCourse = await scrap(url);
-        if (!newCourse) {
-          response.push("Failed to add course", null);
-          continue;
-        }
-        if (
-          newCourse["price"] !== "Free" &&
-          req.user._id != process.env.adminID
-        ) {
-          response.push(["This coupon is not 100% Free", null]);
-          continue;
-        }
+    const newCourse = {
+      title: "Mastering APACHE MAVEN- Java Build Tool - The MAVEN MOVIE !!",
+      headline:
+        "#TOP 2022 UNIQUE COURSE ON APACHE MAVEN #Awesome Movie-Like Learning Experience. All Animated Videos. NO PPT",
+      price: "₹385",
+      image: "https://img-b.udemycdn.com/course/480x270/2629948_c3bb_3.jpg",
+      category: "Development",
+      rating: "4.6",
+      expiry: "Expires on May 25, 2022",
+      instructor: "Quaatso Learning",
+      coupon:
+        "https://www.udemy.com/course/maven-virtual-classroom/?couponCode=QUAATSO_FREE_MAVEN",
+      creator: "61f8d17f3b22cb1b1404b3cc",
+      _id: "maven-virtual-classroom",
+    };
+    await Course.insertMany()
+    // for (url of courseurl) {
+    //   const keywords = url.split("/");
+    //   if (keywords.length < 5 || keywords[2] !== "www.udemy.com") {
+    //     response.push([
+    //       "Not Valid Please enter a valid Udemy Course Link",
+    //       null,
+    //     ]);
+    //     continue;
+    //   } else if (
+    //     (keywords.length < 6 || keywords[5] === "") &&
+    //     (!req.user || req.user._id != process.env.adminID)
+    //   ) {
+    //     response.push(["No coupon code", null]);
+    //     continue;
+    //   } else {
+    //     let isPresent = await Course.findById(keywords[4]);
+    //     if (isPresent) {
+    //       if (isPresent["coupon"] === url) {
+    //         response.push([
+    //           "This Coupon Code is Old",
+    //           `/courses/${keywords[4]}`,
+    //         ]);
+    //         continue;
+    //       }
+    //     }
+    //     const newCourse = await scrap(url);
+    //     if (!newCourse) {
+    //       response.push("Failed to add course", null);
+    //       continue;
+    //     }
+    //     if (
+    //       newCourse["price"] !== "Free" &&
+    //       req.user._id != process.env.adminID
+    //     ) {
+    //       response.push(["This coupon is not 100% Free", null]);
+    //       continue;
+    //     }
 
-        if (isPresent) {
-          const cupdated = await Course.findByIdAndUpdate(
-            keywords[4],
-            newCourse
-          );
-          await cupdated.save();
-          response.push(["Succesfully Updated", `/courses/${keywords[4]}`]);
-          continue;
-        }
-        newCourse["creator"] = req.user._id;
-        newCourse["_id"] = keywords[4];
-        const course = new Course(newCourse);
-        await course.save();
-        response.push([
-          "Succesfully added a new course",
-          `/courses/${keywords[4]}`,
-        ]);
-      }
-    }
+    //     if (isPresent) {
+    //       const cupdated = await Course.findByIdAndUpdate(
+    //         keywords[4],
+    //         newCourse
+    //       );
+    //       await cupdated.save();
+    //       response.push(["Succesfully Updated", `/courses/${keywords[4]}`]);
+    //       continue;
+    //     }
+    //     newCourse["creator"] = req.user._id;
+    //     newCourse["_id"] = keywords[4];
+    //     console.log(newCourse);
+    //     // const course = new Course(newCourse);
+    //     // await course.save();
+    //     response.push([
+    //       "Succesfully added a new course",
+    //       `/courses/${keywords[4]}`,
+    //     ]);
+    // }
+    // }
     res.render("courses/submit", { response });
   })
 );

@@ -15,7 +15,8 @@
       <h5 class="information"><%= courses[i].headline %></h5>
       <div class="wrapper">
         <p>
-          Instructor : <span class="instructor"><%= courses[i].instructor %></span>
+          Instructor :
+          <span class="instructor"><%= courses[i].instructor %></span>
         </p>
         <a class="btn btn-primary" href="/courses/<%=courses[i]._id%>">View</a>
       </div>
@@ -29,5 +30,21 @@
     </div>
   </div>
 </div>
-
 <% } %>
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <% for(let i=1;i<=count;i++){%> <% if(category) {%>
+    <li class="page-item me-2">
+      <a
+        class="page-link"
+        href="/courses/?category=<%= category %>&page=<%= i %>  "
+        ><%= i %>
+      </a>
+    </li>
+    <% }else{ %>
+    <li class="page-item me-2">
+      <a class="page-link" href="/courses/?page=<%= i %>"><%= i %> </a>
+    </li>
+    <% } %> <% } %>
+  </ul>
+</nav>
