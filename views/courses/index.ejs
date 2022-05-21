@@ -7,44 +7,46 @@
 
 <%layout('layouts/homelayout') -%> <% if(courses.length==0){%>
 <h1>No Courses to display</h1>
-<% } %> <% for(let i=courses.length-1;i>=0;i--){%>
-<div id="container">
-  <div class="card">
-    <div class="details">
-      <h2><%= courses[i].title %></h2>
-      <h5 class="information"><%= courses[i].headline %></h5>
-      <div class="wrapper">
-        <p>
-          Instructor :
-          <span class="instructor"><%= courses[i].instructor %></span>
-        </p>
-        <a class="btn btn-primary" href="/courses/<%=courses[i]._id%>">View</a>
+<% } %> <% for(let i=0;i<courses.length;i++){%>
+  <div id="container">
+    <div class="card">
+      <div class="details">
+        <h2><%= courses[i].title %></h2>
+        <h5 class="information"><%= courses[i].headline %></h5>
+        <div class="wrapper">
+          <p>
+            Instructor :
+            <span class="instructor"><%= courses[i].instructor %></span>
+          </p>
+          <a class="btn btn-primary" href="/courses/<%=courses[i]._id%>"
+            >View</a
+          >
+        </div>
+      </div>
+      <div>
+        <img
+          class="img-fluid course-image"
+          src="<%= courses[i].image%> "
+          alt="course image"
+        />
       </div>
     </div>
-    <div>
-      <img
-        class="img-fluid course-image"
-        src="<%= courses[i].image%> "
-        alt="course image"
-      />
-    </div>
   </div>
-</div>
-<% } %>
-<nav aria-label="Page navigation example">
-  <ul class="pagination justify-content-center">
-    <% for(let i=1;i<=count;i++){%> <% if(category) {%>
-    <li class="page-item me-2">
-      <a
-        class="page-link"
-        href="/courses/?category=<%= category %>&page=<%= i %>  "
-        ><%= i %>
-      </a>
-    </li>
-    <% }else{ %>
-    <li class="page-item me-2">
-      <a class="page-link" href="/courses/?page=<%= i %>"><%= i %> </a>
-    </li>
-    <% } %> <% } %>
-  </ul>
-</nav>
+  <% } %>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <% for(let i=1;i<=count;i++){%> <% if(category) {%>
+      <li class="page-item me-2">
+        <a
+          class="page-link"
+          href="/courses/?category=<%= category %>&page=<%= i %>  "
+          ><%= i %>
+        </a>
+      </li>
+      <% }else{ %>
+      <li class="page-item me-2">
+        <a class="page-link" href="/courses/?page=<%= i %>"><%= i %> </a>
+      </li>
+      <% } %> <% } %>
+    </ul>
+  </nav>
