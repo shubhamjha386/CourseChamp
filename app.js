@@ -90,6 +90,4 @@ app.use((err, req, res, next) => {
   const { status = 500, message = "Something Went Wrong", stack } = err;
   res.status(status).render("error", { status, message, stack });
 });
-app.listen(4000, () => {
-  console.log("On port 4000");
-});
+app.listen(process.env.PORT || 4000);
