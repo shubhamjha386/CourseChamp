@@ -19,6 +19,7 @@ module.exports = async (courseurl) => {
       let students = document.querySelector(
         'div[data-purpose="enrollment"]'
       ).textContent;
+      students = students.replace(",", "");
       let category = document.querySelector(
         'meta[property="udemy_com:category"]'
       ).content;
