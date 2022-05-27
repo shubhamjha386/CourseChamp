@@ -2,7 +2,7 @@ const puppeteer = require("puppeteer");
 
 module.exports = async (courseurl) => {
   try {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
     const context = browser.defaultBrowserContext();
     context.overridePermissions("https://www.udemy.com/", [
       "geolocation",
