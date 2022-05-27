@@ -104,7 +104,7 @@ app.all("*", (req, res, next) => {
   throw new AppError("Page not Found", 404);
 });
 app.use((err, req, res, next) => {
-  const { status = 500, message = "Something Went Wrong", stack } = err;
-  res.status(status).render("error", { status, message, stack });
+  const { status = 500, message = "Something Went Wrong" } = err;
+  res.status(status).render("error", { status, message });
 });
 app.listen(process.env.PORT || 4000);
