@@ -13,7 +13,7 @@ const CourseSchema = new Schema(
     coupon: String,
     category: String,
     rating: String,
-    students: String,
+    students: Number,
     expiry: String,
     instructor: String,
     creator: {

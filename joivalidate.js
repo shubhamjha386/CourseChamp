@@ -4,7 +4,7 @@ module.exports.courseSchema = Joi.object({
     title: Joi.string().required(),
     description: Joi.string().required(),
     price: Joi.number().required().min(0),
-    students: Joi.string().required(),
+    students: Joi.number().required(),
     coupon: Joi.string().required(),
   }).required(),
 });
