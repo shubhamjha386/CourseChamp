@@ -16,6 +16,9 @@ module.exports = async (courseurl) => {
       let title = document.querySelector('meta[name="title"]').content;
       let headline = document.querySelector('meta[name="description"]').content;
       let image = document.querySelector('meta[property="og:image"]').content;
+      let students = document.querySelector(
+        'div[data-purpose="enrollment"]'
+      ).textContent;
       let category = document.querySelector(
         'meta[property="udemy_com:category"]'
       ).content;
@@ -28,7 +31,7 @@ module.exports = async (courseurl) => {
         "IT & Software",
         "Marketing",
         "Music",
-        "Teaching & Academics"
+        "Teaching & Academics",
       ];
       if (!categories.includes(category)) category = "Other";
       let price = "unknown";
@@ -84,6 +87,7 @@ module.exports = async (courseurl) => {
         title,
         headline,
         price,
+        students,
         image,
         category,
         rating,
@@ -99,4 +103,3 @@ module.exports = async (courseurl) => {
     return null;
   }
 };
-

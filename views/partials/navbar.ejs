@@ -15,15 +15,18 @@ wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
   <div class="container-fluid d-flex justify-content-between">
     <div class="web"><a class="navbar-brand" href="/">CourseChamp</a></div>
     <div class="web">
-      <form>
+      <form action="/courses/search" method="GET">
         <div
           class="wrapper container-fluid d-flex align-items-center justify-content-between"
         >
           <div class="fa fa-search"></div>
           <input
-            type="search"
+            type="text"
             class="search-control ms-2 me-2"
-            placeholder="Search for anything"
+            placeholder="Search any course"
+            name="course"
+            id="course"
+            required
           />
         </div>
       </form>
@@ -80,17 +83,20 @@ wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
       </div>
     </div>
 
-    <div class="mobile"><a class="navbar-brand" href="/">LOGO</a></div>
+    <div class="mobile"><a class="navbar-brand" href="/">CourseChamp</a></div>
     <div class="mobile search">
-      <form>
+      <form action="/courses/search" method="GET">
         <div
           class="wrapper container-fluid d-flex align-items-center justify-content-between"
         >
           <div class="fa fa-search"></div>
           <input
-            type="search"
+            type="text"
             class="search-control ms-2 me-2"
-            placeholder="Search for anything"
+            placeholder="Search any course"
+            name="course"
+            id="course"
+            required
           />
         </div>
       </form>

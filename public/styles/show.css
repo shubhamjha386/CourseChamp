@@ -70,7 +70,7 @@
   font-size: 1.1rem;
   color: #f8ce0b;
 }
-.wrapper {
+.showrapper {
   display: flex;
   flex-direction: row;
   margin-bottom: 0.6rem;
@@ -134,7 +134,7 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 1rem;
 }
-.comment-wrapper {
+.comment-showrapper {
   display: flex;
   flex-direction: row;
   margin-top: 0.6rem;

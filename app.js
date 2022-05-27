@@ -10,8 +10,9 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
+const wrapAsync = require("./utils/wrapAsync");
 require("dotenv").config();
-
+const Course = require("./models/courses");
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
@@ -70,6 +71,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use(paginate.middleware(10, 50));
+
 app.get("/about", (req, res) => {
   res.render("layouts/about");
 });
@@ -79,9 +81,24 @@ app.use("/courses", courseRoutes);
 
 app.use("/courses/:id/reviews", reviewRoutes);
 
-app.get("/", (req, res) => {
-  res.render("home");
-});
+app.get(
+  "/",
+  wrapAsync(async (req, res) => {
+    const latestcourses = await Course.find({})
+      .sort({ $natural: -1 })
+      .limit(10)
+      .lean();
+    const popularcourses = await Course.find({})
+      .sort({ students: -1 })
+      .limit(10)
+      .lean();
+    const highestrated = await Course.find({})
+      .sort({ rating: -1 })
+      .limit(10)
+      .lean();
+    res.render("home", { latestcourses, popularcourses, highestrated });
+  })
+);
 
 app.all("*", (req, res, next) => {
   throw new AppError("Page not Found", 404);

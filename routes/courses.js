@@ -20,11 +20,18 @@ const validateCourse = (req, res, next) => {
     throw new AppError(msg, 400);
   } else next();
 };
+router.get("/search", async (req, res) => {
+  const { course, count, category } = req.query;
+  const regex = new RegExp(course, "i");
+  const courses = await Course.find({ title: { $regex: regex } });
+  res.render("courses/index", { courses, count, category });
+});
 router.get(
   "/",
   wrapAsync(async (req, res) => {
     let { category, page } = req.query;
     if (category) {
+      const Category = category;
       categories = category.split("-");
       if (categories.length == 1) {
         category = `${categories[0]}`;
@@ -39,7 +46,7 @@ router.get(
         .exec();
       let count = await Course.countDocuments({ category: category });
       count = Math.ceil(count / req.query.limit);
-      res.render("courses/index", { courses, count, category });
+      res.render("courses/index", { courses, count, Category });
     } else {
       const courses = await Course.find({})
         .sort({ $natural: -1 })
@@ -49,7 +56,8 @@ router.get(
         .exec();
       let count = await Course.countDocuments({});
       count = Math.ceil(count / req.query.limit);
-      res.render("courses/index", { courses, count, category });
+      let Category;
+      res.render("courses/index", { courses, count, Category });
     }
   })
 );

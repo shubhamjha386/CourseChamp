@@ -33,13 +33,14 @@
     </div>
   </div>
   <% } %>
+  <% if(count>1){%> 
   <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
-      <% for(let i=1;i<=count;i++){%> <% if(category) {%>
+      <% for(let i=1;i<=count;i++){%> <% if(Category) {%>
       <li class="page-item me-2">
         <a
           class="page-link"
-          href="/courses/?category=<%= category %>&page=<%= i %>  "
+          href="/courses/?category=<%= Category %>&page=<%= i %>  "
           ><%= i %>
         </a>
       </li>
@@ -49,4 +50,4 @@
       </li>
       <% } %> <% } %>
     </ul>
-  </nav>
+  </nav><% } %> 

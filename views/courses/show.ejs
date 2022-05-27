@@ -22,16 +22,14 @@
       </div>
     </div>
 
-    <div class="wrapper">
+    <div class="showrapper">
       <div class="instructor">
         Created By <span class="bul"> <%= coursed.instructor %></span>
       </div>
       <div class="category">
         Category:
 
-        <a href="/courses/?category=<%=category%>"
-          ><%= coursed.category %>
-        </a>
+        <a href="/courses/?category=<%=category%>"><%= coursed.category %> </a>
       </div>
     </div>
 
@@ -87,11 +85,11 @@
     <p class="comment-warpper user-comment">No reviews yet</p>
     <% } else { for(let comment of coursed.reviews){ %>
     <div class="comment-box-content">
-      <div class="comment-wrapper">
+      <div class="comment-showrapper">
         <div class="comment-username"><%= comment.creator.username %>:-</div>
         <div class="user-comment"><%= comment.comment %></div>
       </div>
-      <div class="comment-wrapper">
+      <div class="comment-showrapper">
         <% if(currentuser && comment.creator.equals(currentuser._id)){ %>
         <form
           action="/courses/<%=coursed._id%>/reviews/<%=comment._id%>?_method=DELETE"

@@ -1,3 +1,200 @@
-<%layout('layouts/homelayout') -%> 
-<h1>Homepage of Project-S11</h1>
+<%layout('layouts/homelayout') -%>
+<link rel="stylesheet" href="/styles/home.css" />
 
+<div
+  id="latestAdded"
+  class="carousel carousel-dark slide mb-4"
+  data-bs-interval="false"
+>
+  <div class="carousel-inner">
+    <h2 class="ms-2 text-muted pb-2">Latest Added</h1>
+    <div class="carousel-item active">
+      <div class="cards-wrapper">
+        <% for(let i=0;i<Math.min(latestcourses.length,5);i++) {%>
+          <div class="card coursecard">
+            <a class="courselink" href="/courses/<%=latestcourses[i]._id%>"></a>
+            <img
+              src="<%= latestcourses[i].image %> "
+              class="card-img-top"
+              alt="<%= latestcourses[i].title %> "
+            />
+            <div class="card-body">
+              <h6 class="card-title text-start "><%= latestcourses[i].title %> </h6>
+              <p class="card-subtitle mb-2 text-muted text-start"><%= latestcourses[i].instructor %> </p>
+              <h6 class="card-subtitle text-start fw-bolder"><%=latestcourses[i].price  %> </h6>
+            </div>
+          </div>
+          <% } %>  
+      </div>
+    </div>
+    <div class="carousel-item">
+      <div class="cards-wrapper">
+        <% for(let i=5;i<latestcourses.length;i++) {%>
+          <div class="card coursecard">
+            <a class="courselink" href="/courses/<%=latestcourses[i]._id%>"></a>
+            <img
+              src="<%= latestcourses[i].image %> "
+              class="card-img-top"
+              alt="<%= latestcourses[i].title %> "
+            />
+            <div class="card-body">
+              <h6 class="card-title text-start "><%= latestcourses[i].title %> </h6>
+              <p class="card-subtitle mb-2 text-muted text-start"><%= latestcourses[i].instructor %> </p>
+              <h6 class="card-subtitle text-start fw-bolder"><%=latestcourses[i].price  %> </h6>
+            </div>
+          </div>
+          <% } %> 
+       
+      </div>
+    </div>
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#latestAdded"
+      data-bs-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#latestAdded"
+      data-bs-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
+
+<div
+  id="popularCourses"
+  class="carousel carousel-dark slide mb-4"
+  data-bs-interval="false"
+>
+  <div class="carousel-inner">
+    <h2 class="ms-2 pb-2 text-muted">Popular Courses</h2>
+    <div class="carousel-item active">
+      <div class="cards-wrapper">
+        <% for(let i=0;i<Math.min(popularcourses.length,5);i++) {%>
+          <div class="card coursecard">
+            <a class="courselink" href="/courses/<%=popularcourses[i]._id%>"></a>
+            <img
+              src="<%= popularcourses[i].image %> "
+              class="card-img-top"
+              alt="<%= popularcourses[i].title %> "
+            />
+            <div class="card-body">
+              <h6 class="card-title text-start "><%= popularcourses[i].title %> </h6>
+              <p class="card-subtitle mb-2 text-muted text-start"><%= popularcourses[i].instructor %> </p>
+              <h6 class="card-subtitle text-start fw-bolder"><%=popularcourses[i].price  %> </h6>
+            </div>
+          </div>
+          <% } %>  
+      </div>
+    </div>
+    <div class="carousel-item">
+      <div class="cards-wrapper">
+        <% for(let i=5;i<popularcourses.length;i++) {%>
+          <div class="card coursecard">
+            <a class="courselink" href="/courses/<%=popularcourses[i]._id%>"></a>
+            <img
+              src="<%= popularcourses[i].image %> "
+              class="card-img-top"
+              alt="<%= popularcourses[i].title %> "
+            />
+            <div class="card-body">
+              <h6 class="card-title text-start "><%= popularcourses[i].title %> </h6>
+              <p class="card-subtitle mb-2 text-muted text-start"><%= popularcourses[i].instructor %> </p>
+              <h6 class="card-subtitle text-start fw-bolder"><%=popularcourses[i].price  %> </h6>
+            </div>
+          </div>
+          <% } %>  
+      </div>
+    </div>
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#popularCourses"
+      data-bs-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#popularCourses"
+      data-bs-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
+<div
+  id="highestRated"
+  class="carousel carousel-dark slide mb-4"
+  data-bs-interval="false"
+>
+  <div class="carousel-inner">
+    <h2 class="ms-2 pb-2 text-muted">Highest Rated</h2>
+    <div class="carousel-item active">
+      <div class="cards-wrapper">
+        <% for(let i=0;i<Math.min(highestrated.length,5);i++) {%>
+          <div class="card coursecard">
+            <a class="courselink" href="/courses/<%=highestrated[i]._id%>"></a>
+            <img
+              src="<%= highestrated[i].image %> "
+              class="card-img-top"
+              alt="<%= highestrated[i].title %> "
+            />
+            <div class="card-body">
+              <h6 class="card-title text-start "><%= highestrated[i].title %> </h6>
+              <p class="card-subtitle mb-2 text-muted text-start"><%= highestrated[i].instructor %> </p>
+              <h6 class="card-subtitle text-start fw-bolder"><%=highestrated[i].price  %> </h6>
+            </div>
+          </div>
+          <% } %>  
+      </div>
+    </div>
+    <div class="carousel-item">
+      <div class="cards-wrapper">
+        <% for(let i=5;i<highestrated.length;i++) {%>
+          <div class="card coursecard">
+            <a class="courselink" href="/courses/<%=highestrated[i]._id%>"></a>
+            <img
+              src="<%= highestrated[i].image %> "
+              class="card-img-top"
+              alt="<%= highestrated[i].title %> "
+            />
+            <div class="card-body">
+              <h6 class="card-title text-start "><%= highestrated[i].title %> </h6>
+              <p class="card-subtitle mb-2 text-muted text-start"><%= highestrated[i].instructor %> </p>
+              <h6 class="card-subtitle text-start fw-bolder"><%=highestrated[i].price  %> </h6>
+            </div>
+          </div>
+          <% } %>  
+      </div>
+    </div>
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#highestRated"
+      data-bs-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#highestRated"
+      data-bs-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
